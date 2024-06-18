@@ -1,10 +1,9 @@
-
 const ButtonWithSVG = ({ pathD, text, action, color }) => {
   return (
     <a
       href="#"
       onClick={action}
-      className={`inline-flex items-center justify-center gap-2.5 rounded-full border py-4 px-10 text-center font-medium ${color} hover:bg-opacity-90 lg:px-8 xl:px-10`}
+      className={`inline-flex items-center justify-center gap-2.5 rounded-full border py-2 px-4 text-center font-medium ${color} hover:bg-opacity-90 lg:px-8 xl:px-10 md:py-3 md:px-6 md:text-base sm:py-2 sm:px-4 sm:text-sm`}
     >
       <span>
         <svg
@@ -18,7 +17,7 @@ const ButtonWithSVG = ({ pathD, text, action, color }) => {
           <path d={pathD} />
         </svg>
       </span>
-      {text}
+      <span className="text-sm sm:text-base md:text-lg">{text}</span>
     </a>
   );
 };

@@ -55,16 +55,20 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
 
   useEffect(() => {
     const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+      console.log('token:', token)
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      };
+
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`${API_URL}/api/me`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        setUuid(response.data.uuid);
+        const response = await axios.get(`${API_URL}/api/me`, config);
+        setUuid(response.data.uuid); // Fetch successful
       } catch (error) {
         console.error(error);
+        return null; // Fetch failed
       }
     };
 

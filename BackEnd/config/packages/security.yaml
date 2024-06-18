@@ -33,8 +33,7 @@ security:
             entry_point: jwt
             refresh_jwt:
                 check_path: /api/token/refresh
-    access_control:
-        - { path: ^/api/me, roles: IS_AUTHENTICATED_FULLY }
+
 when@test:
     security:
         password_hashers:
