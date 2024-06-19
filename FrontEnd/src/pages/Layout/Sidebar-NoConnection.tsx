@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import LogoIcon from '../../images/logo/SVG/logo_texte_droite_couleur.svg';
-import DarkModeSwitcher from './DarkModeSwitcher';
+import DarkModeSwitcher from '../../components/Header/DarkModeSwitcher.tsx';
 
 const Header = (
 ) => {

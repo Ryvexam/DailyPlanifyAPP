@@ -1,8 +1,8 @@
 // src/components/ConnectionHandler.tsx
 import React, { useEffect, useState, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { handleCheckConnection } from './connectionUtils';
-import Loader from '../../common/Loader';
+import { handleCheckConnection } from './connectionUtils.js';
+import Loader from '../../common/Loader/Loader.tsx';
 
 interface ConnectionHandlerProps {
   children: ReactNode;
@@ -21,9 +21,11 @@ const ConnectionHandler: React.FC<ConnectionHandlerProps> = ({ children }) => {
   }, []);
 
   if (connectionStatus === 'checking') {
-    return <Loader />;
+    return (
+        <Loader/>
+    );
   } else if (connectionStatus === 'failed') {
-    return <Navigate to="/auth/login" replace />;
+    return <Navigate to="/auth/signin" replace />;
   }
 
   return <>{children}</>;

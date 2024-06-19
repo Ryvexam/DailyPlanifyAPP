@@ -1,6 +1,6 @@
 import React from 'react';
-import Breadcrumb from '../../src/components/Breadcrumbs/Breadcrumb.tsx';
-import DefaultLayout from '../layout/Landing.tsx';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
+import DefaultLayout from '../../layout/Header-NotConnected.tsx';
 
 const Landing: React.FC = () => {
   return (

@@ -2,10 +2,10 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { addDays, subDays } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import EventPopup from '../EventPopup.tsx';
-import AddEventButton from '../Events/DayView/AddEventButton';
-import EventList from '../Events/DayView/EventList';
-import { fetchEvents, Event } from '../Events/DayView/utils';
+import EventPopup from './Events/EventPopup.tsx';
+import AddEventButton from './DayView/AddEventButton';
+import EventList from './DayView/EventList';
+import { fetchEvents, Event } from './DayView/utils';
 import axios from 'axios';
 import API_URL from '../customenv.tsx'; // Import axios
 

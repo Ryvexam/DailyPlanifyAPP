@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import DefaultLayout from '../../layout/Landing.tsx';
+import DefaultLayout from '../../layout/Header-NotConnected.tsx';
 import axios from 'axios';
 import Alerts from '../../components/Alerts/AlertsComponent.tsx';
 import API_URL from '../../components/customenv';

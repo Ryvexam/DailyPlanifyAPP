@@ -52,7 +52,7 @@ This command will generate a dist as build folder in the root of your template t
 
 - **Feature 01:** New Dashboard variant Stocks with a DataStats slider, One Chart graph, My Stocks, Trending Stocks and Latest Transaction Cards.
 - **Feature 02:** Pro Form Elements Range Slider & File Drop Zone.
-- **Feature 03:** Pro Form Layout Contact Form 2 & Survey Form.
+- **Feature 03:** Pro Form Header Contact Form 2 & Survey Form.
 - **Feature 04:** Pro Tables.
 - **Feature 05:** Invoice Two.
 - **Feature 06:** Faq's.

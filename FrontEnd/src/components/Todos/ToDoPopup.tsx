@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import API_URL from './customenv.tsx';
+import API_URL from '../customenv.tsx';
 
 interface TodoPopupProps {
   popupOpen: boolean;

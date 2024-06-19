@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import DefaultLayout from '../layout/DefaultLayout';
-import MonthView from '../components/CalendarComponents/monthView';
-import DayView from '../components/CalendarComponents/dayView.tsx';
-import ButtonWithSVG from '../components/ButtonwithSVG.tsx';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
+import Header from '../../layout/Header.tsx';
+import MonthView from '../../components/CalendarComponents/monthView.tsx';
+import DayView from '../../components/CalendarComponents/dayView.tsx';
+import ButtonWithSVG from '../../components/Buttons/ButtonwithSVG.tsx';
 
 const Calendar = () => {
   const [viewType, setViewType] = useState('month'); // Permet de changer la vue
@@ -22,7 +22,7 @@ const Calendar = () => {
   };
 
   return (
-    <DefaultLayout>
+    <Header>
       <Breadcrumb pageName="Calendrier" />
 
 
@@ -43,7 +43,7 @@ const Calendar = () => {
       ) : (
         <DayView selectedDay={selectedDay} />
       )}
-    </DefaultLayout>
+    </Header>
   );
 };
 

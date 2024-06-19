@@ -1,5 +1,5 @@
 import React from 'react';
-import { Event, eventToICal } from './utils';
+import { Event, eventToICal } from './utils.ts';
 import API_URL from '../../customenv.tsx';
 
 interface EventListProps {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.js';
-import TodoHeader from '../../components/TodoHeader.tsx';
-import DefaultLayout from '../../layout/DefaultLayout';
+import TodoHeader from '../../components/Todos/TodoHeader.tsx';
+import Header from '../../layout/Header.tsx';
 import { jwtDecode } from 'jwt-decode';
 import DropdownToDo from '../../components/Dropdowns/DropdownToDo.tsx';
 import API_URL from '../../components/customenv.tsx';
@@ -98,7 +98,7 @@ const TodoList: React.FC = () => {
   const todosNonPrioritaires = todos.filter((todo) => !todo.todo_priority);
 
   return (
-    <DefaultLayout>
+    <Header>
       <div className="mx-auto max-w-5xl">
         <Breadcrumb pageName="Todo List" />
         <TodoHeader />
@@ -196,7 +196,7 @@ const TodoList: React.FC = () => {
         </div>
 
       </div>
-    </DefaultLayout>
+    </Header>
   );
 };
 

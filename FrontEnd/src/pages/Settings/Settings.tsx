@@ -1,5 +1,5 @@
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import DefaultLayout from '../../layout/DefaultLayout';
+import Header from '../../layout/Header.tsx';
 import { jwtDecode } from 'jwt-decode';
 
 const Settings = () => {
@@ -13,7 +13,7 @@ const Settings = () => {
   }
 
   return (
-    <DefaultLayout>
+    <Header>
       <div className="mx-auto max-w-270">
         <Breadcrumb pageName="Paramètres du compte" />
 
@@ -91,7 +91,7 @@ const Settings = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </Header>
   );
 };
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import TextInput from './Events/EventsPopup/TextInput';
-import DateTimeInput from './Events/EventsPopup/DateTimeInput';
-import TextAreaInput from './Events/EventsPopup/TextAreaInput';
-import ColorPicker from './Events/EventsPopup/ColorPicker';
-import API_URL from './customenv.tsx';
+import TextInput from './EventsPopup/TextInput.tsx';
+import DateTimeInput from './EventsPopup/DateTimeInput.tsx';
+import TextAreaInput from './EventsPopup/TextAreaInput.tsx';
+import ColorPicker from './EventsPopup/ColorPicker.tsx';
+import API_URL from '../../customenv.tsx';
 
 interface EventPopupProps {
   popupOpen: boolean;

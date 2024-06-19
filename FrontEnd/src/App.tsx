@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 // Import all necessary components and pages
-import Landing from './pages/LandingPage';
-import Calendar from './pages/Calendar';
-import TodoList from './pages/Task/TodoList.tsx';
-import Settings from './pages/Pages/Settings';
+import Landing from './pages/Landing/LandingPage.tsx';
+import Calendar from './pages/Calendar/Calendar.tsx';
+import TodoList from './pages/Todos/TodoList.tsx';
+import Settings from './pages/Settings/Settings';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
-import PageTitle from './components/PageTitle';
+import PageTitle from './components/Title/PageTitle.tsx';
 
 import ConnectionHandler from './components/ConnectionHandler';
 

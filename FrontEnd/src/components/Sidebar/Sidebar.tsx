@@ -211,7 +211,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
 
-              {/* <!-- Menu Item Task --> */}
+              {/* <!-- Menu Item Todos --> */}
             </ul>
           </div>
 

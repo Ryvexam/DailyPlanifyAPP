@@ -64,13 +64,13 @@ const TodoHeader = () => {
             Add To Do
           </button>
 
-          {/* <!-- ===== Task Popup Start ===== --> */}
+          {/* <!-- ===== Todos Popup Start ===== --> */}
           <TodoPopup
             popupOpen={popupOpen}
             setPopupOpen={setPopupOpen}
             
           />
-          {/* <!-- ===== Task Popup End ===== --> */}
+          {/* <!-- ===== Todos Popup End ===== --> */}
         </div>
       </div>
     </div>

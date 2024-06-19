@@ -1,6 +1,6 @@
 import React from 'react';
-import DateInput from './DateInput';
-import TimeInput from './TimeInput';
+import DateInput from './DateInput.tsx';
+import TimeInput from './TimeInput.tsx';
 
 interface DateTimeInputProps {
   label: string;
