@@ -48,6 +48,9 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface, JWTUserI
     #[ORM\OneToMany(targetEntity: Todo::class, mappedBy: 'userUuid')]
     private Collection $todos;
 
+    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'userUuid')]
+    private Collection $note;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();

@@ -10,7 +10,7 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import PageTitle from './components/Title/PageTitle.tsx';
 
-import ConnectionHandler from './components/ConnectionHandler';
+import ConnectionHandler from './components/ConnectionHandler/ConnectionHandler.tsx';
 
 function App() {
   const { pathname } = useLocation();

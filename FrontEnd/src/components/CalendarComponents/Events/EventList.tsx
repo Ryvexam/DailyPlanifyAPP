@@ -11,8 +11,8 @@ interface EventListProps {
 
 const positionEvent = (event: Event) => {
   const eventStartDate = new Date(event.event_date_start);
-  const eventStartHour = eventStartDate.getUTCHours();
-  const eventStartMinutes = eventStartDate.getUTCMinutes();
+  const eventStartHour = eventStartDate.getHours();
+  const eventStartMinutes = eventStartDate.getMinutes();
   const pixels = 80;
   const pixelsPerMinute = pixels / 60;
   const topOffset = (eventStartHour * 60 + eventStartMinutes) * pixelsPerMinute;
@@ -66,8 +66,8 @@ const EventList: React.FC<EventListProps> = ({
 
         const eventStartDate = new Date(event.event_date_start);
         const eventEndDate = new Date(event.event_date_end);
-        const startTimeUTC = `${eventStartDate.getUTCHours().toString().padStart(2, '0')}:${eventStartDate.getUTCMinutes().toString().padStart(2, '0')}`;
-        const endTimeUTC = `${eventEndDate.getUTCHours().toString().padStart(2, '0')}:${eventEndDate.getUTCMinutes().toString().padStart(2, '0')}`;
+        const startTime = `${eventStartDate.getHours().toString().padStart(2, '0')}:${eventStartDate.getMinutes().toString().padStart(2, '0')}`;
+        const endTime = `${eventEndDate.getHours().toString().padStart(2, '0')}:${eventEndDate.getMinutes().toString().padStart(2, '0')}`;
 
         return (
           <div
@@ -79,9 +79,9 @@ const EventList: React.FC<EventListProps> = ({
           >
             <strong>{event.event_name}</strong>: {event.event_description}<br />
 
-            <small>Horaire: {startTimeUTC} - {endTimeUTC}</small>
+            <small>Horaire: {startTime} - {endTime}</small>
             <div
-              className="inline-flex items-center justify-center gap-2.5 rounded-full border py-2 px-3 text-center font-medium"
+              className="lg:px-2 xl:px-2 md:py-1 md:px-2 md:text-base sm:py-1 sm:px-2 sm:text-sm inline-flex items-center justify-center gap-2.5 rounded-full border py-2 px-3 text-center font-medium"
               style={{ position: 'absolute', right: '5px', bottom: '5px' }}
             >
               <button onClick={(e) => {
@@ -102,7 +102,7 @@ const EventList: React.FC<EventListProps> = ({
             <div
               style={{ position: 'absolute', right: '140px', bottom: '5px' }}
 
-              className="inline-flex items-center justify-center gap-2.5 rounded-full border py-2 px-3 text-center font-medium"
+              className="lg:px-2 xl:px-2 md:py-1 md:px-2 md:text-base sm:py-1 sm:px-2 sm:text-sm inline-flex items-center justify-center gap-2.5 rounded-full border py-2 px-3 text-center font-medium"
             >
               <button
 

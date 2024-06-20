@@ -1,4 +1,5 @@
 import axios from 'axios';
+import API_URL from "../customenv.tsx";
 
 export const handleCheckConnection = async () => {
   const config = {
@@ -12,7 +13,7 @@ export const handleCheckConnection = async () => {
   const body = JSON.stringify({ token, refresh_token });
 
   try {
-    await axios.post('https://127.0.0.1:8000/api/check/connection', body, config);
+    await axios.post(`${API_URL}/api/check/connection`, body, config);
     return true; // Connection OK
   } catch (error) {
     return false; // Connection Failed

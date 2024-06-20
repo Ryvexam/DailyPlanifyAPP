@@ -19,7 +19,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         'get' => new Get(),
         'post' => new Post(),
-        'put' => new Put(),
         'delete' => new Delete(),
         'patch' => new Patch(),
     ]

@@ -30,17 +30,19 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
 
   const getDefaultTime = () => {
     const currentDate = new Date();
-    const offset = currentDate.getTimezoneOffset() * 60000;
-    const localISOTime = new Date(currentDate.getTime() - offset).toISOString().slice(11, 16);
+    const localTime = new Date(currentDate.getTime());
+    localTime.setMinutes(0);
+    const localISOTime = localTime.toISOString().slice(11, 16);
     return localISOTime;
   };
 
-  const getDefaultEndTime = (startDate: string, startTime: string) => {
-    const start = new Date(`${startDate}T${startTime}`);
-    const offset = start.getTimezoneOffset() * 60000;
-    const endTime = new Date(start.getTime() - offset + 3600000).toISOString().slice(11, 16);
+  const getDefaultEndTime = ( startTime) => {
+    const [hours, minutes] = startTime.split(':').map(Number);
+    const endHours = (hours + 1) % 24;
+    const endTime = `${endHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
     return endTime;
   };
+
 
   const colors = ['#17BEBB', '#E4572E', '#FFC914', '#2E282A', '#76B041', '#F283B6'];
 
@@ -48,15 +50,14 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
   const [dateStart, setDateStart] = useState<string>(getDefaultDate());
   const [timeStart, setTimeStart] = useState<string>(getDefaultTime());
   const [dateEnd, setDateEnd] = useState<string>(getDefaultDate());
-  const [timeEnd, setTimeEnd] = useState<string>(getDefaultEndTime(getDefaultDate(), getDefaultTime()));
+  const [timeEnd, setTimeEnd] = useState<string>(getDefaultEndTime(getDefaultTime()));
   const [description, setDescription] = useState<string>('');
-  const [color, setColor] = useState<string>(colors[0]); // Set the first color as default
+  const [color, setColor] = useState<string>(colors[0]);
   const [uuid, setUuid] = useState<string>('');
 
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem('token');
-      console.log('token:', token)
       const config = {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -76,7 +77,7 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
   }, []);
 
   useEffect(() => {
-    setTimeEnd(getDefaultEndTime(dateStart, timeStart));
+    setTimeEnd(getDefaultEndTime(timeStart));
   }, [dateStart, timeStart]);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -87,8 +88,8 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
       return;
     }
 
-    const startDateTime = new Date(`${dateStart}T${timeStart}`).toISOString();
-    const endDateTime = new Date(`${dateEnd}T${timeEnd}`).toISOString();
+    const startDateTime = new Date(`${dateStart}T${timeStart}`);
+    const endDateTime = new Date(`${dateEnd}T${timeEnd}`);
 
     const eventData = {
       Name: name,
@@ -101,21 +102,15 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
 
     try {
       let response;
-      if (isEdit) {
-        response = await axios.patch(`${API_URL}/api/events/${uuid}`, eventData, {
+      response = await axios.patch(`${API_URL}/api/events/${uuid}`, eventData, {
           headers: {
             'Content-Type': 'application/merge-patch+json',
           },
         });
-      } else {
-        response = await axios.post(`${API_URL}/api/events`, eventData, {
-          headers: {
-            'Content-Type': 'application/ld+json',
-          },
-        });
-      }
 
-      if ((isEdit && response.status === 200) || (!isEdit && response.status === 201)) {
+
+
+      if (response.status === 200 || response.status === 201) {
         console.log('Event saved successfully');
         onSave({
           event_uuid: response.data.event_uuid,
@@ -126,6 +121,7 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
           event_color: eventData.color,
         });
         setPopupOpen(false);
+
       } else {
         console.error('Failed to save event');
       }

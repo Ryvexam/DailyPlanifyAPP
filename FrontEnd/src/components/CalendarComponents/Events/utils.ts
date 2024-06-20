@@ -39,8 +39,8 @@ export const fetchEvents = async (): Promise<Event[]> => {
   return events.map((event: any) => ({
     event_uuid: event.event_uuid,
     event_name: event.event_name,
-    event_date_start: new Date(event.event_date_start.date), // Assuming the server returns UTC
-    event_date_end: new Date(event.event_date_end.date), // Assuming the server returns UTC
+    event_date_start: new Date(event.event_date_start.date),
+    event_date_end: new Date(event.event_date_end.date),
     event_description: event.event_description,
     event_color: event.event_color || '#0000FF',
   }));
@@ -50,8 +50,8 @@ export const eventToICal = (event: Event) => {
   const startDate = new Date(event.event_date_start.toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
   const endDate = new Date(event.event_date_end.toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
 
-  const startDateStr = `${startDate.getFullYear()}${(startDate.getMonth() + 1).toString().padStart(2, '0')}${startDate.getDate().toString().padStart(2, '0')}T${startDate.getUTCHours().toString().padStart(2, '0')}${startDate.getMinutes().toString().padStart(2, '0')}${startDate.getSeconds().toString().padStart(2, '0')}`;
-  const endDateStr = `${endDate.getFullYear()}${(endDate.getMonth() + 1).toString().padStart(2, '0')}${endDate.getDate().toString().padStart(2, '0')}T${endDate.getUTCHours().toString().padStart(2, '0')}${endDate.getMinutes().toString().padStart(2, '0')}${endDate.getSeconds().toString().padStart(2, '0')}`;
+  const startDateStr = `${startDate.getFullYear()}${(startDate.getMonth() + 1).toString().padStart(2, '0')}${startDate.getDate().toString().padStart(2, '0')}T${startDate.getHours().toString().padStart(2, '0')}${startDate.getMinutes().toString().padStart(2, '0')}${startDate.getSeconds().toString().padStart(2, '0')}`;
+  const endDateStr = `${endDate.getFullYear()}${(endDate.getMonth() + 1).toString().padStart(2, '0')}${endDate.getDate().toString().padStart(2, '0')}T${endDate.getHours().toString().padStart(2, '0')}${endDate.getMinutes().toString().padStart(2, '0')}${endDate.getSeconds().toString().padStart(2, '0')}`;
 
   return `BEGIN:VCALENDAR
 VERSION:2.0

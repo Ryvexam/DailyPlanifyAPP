@@ -1,13 +1,14 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { addDays, subDays } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import EventPopup from './Events/EventPopup.tsx';
-import AddEventButton from './DayView/AddEventButton';
-import EventList from './DayView/EventList';
-import { fetchEvents, Event } from './DayView/utils';
+import AddEventButton from './Events/AddEventButton.tsx';
+import EventList from './Events/EventList.tsx';
+import { fetchEvents, Event } from './Events/utils.ts';
 import axios from 'axios';
-import API_URL from '../customenv.tsx'; // Import axios
+import API_URL from '../customenv.tsx';
+import Notes from './Notes/Notes.tsx';
 
 const DayView = ({ selectedDay }: { selectedDay: Date }) => {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -133,53 +134,87 @@ const DayView = ({ selectedDay }: { selectedDay: Date }) => {
     setPopupOpen(false);
   };
 
+  const isToday = (date: Date) => {
+    const today = new Date();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  };
+
+  const getCurrentTimePosition = () => {
+    const now = new Date();
+    const minutesSinceMidnight = now.getHours() * 60 + now.getMinutes();
+    const pixelsPerMinute = 80 / 60;
+    return minutesSinceMidnight * pixelsPerMinute;
+  };
+
   return (
-    <div>
-      <AddEventButton onClick={openPopupWithDefaultEvent} />
+    <div className="flex">
+      <div className="w-2/3">
+        <AddEventButton onClick={openPopupWithDefaultEvent} />
 
-      <EventPopup
-        popupOpen={popupOpen}
-        setPopupOpen={setPopupOpen}
-        isEdit={isEdit}
-        onSave={handleEventSave}
-      />
-
-      <div className="flex items-center justify-between p-4 dark:text-white bg-white shadow dark:border-strokedark dark:bg-boxdark">
-        <button
-          onClick={() => setCurrentDay(subDays(currentDay, 1))}
-          className="px-4 py-2 text-white bg-primary rounded hover:bg-secondary transition duration-300 ease-in-out"
-        >
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </button>
-        <span className="text-primary dark:text-white font-semibold">
-          {currentDay.toLocaleDateString('fr-FR', {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </span>
-        <button
-          onClick={() => setCurrentDay(addDays(currentDay, 1))}
-          className="px-4 py-2 text-white bg-primary rounded hover:bg-secondary transition duration-300 ease-in-out"
-        >
-          <FontAwesomeIcon icon={faChevronRight} />
-        </button>
-      </div>
-
-      <div className="relative flex flex-col bg-white shadow dark:border-strokedark dark:bg-boxdark">
-        {hours.map((hour, index) => (
-          <div key={index} className="flex items-center border-t border-gray-200" style={{ height: '80px' }}>
-            <span className="text-sm font-medium text-gray-900 px-4">{hour}</span>
-            <div className="flex-grow"></div>
-          </div>
-        ))}
-        <EventList
-          onDelete={handleDelete}
-          events={events}
-          draggingEvent={draggingEvent}
-          handleLongPress={handleLongPress}
+        <EventPopup
+          popupOpen={popupOpen}
+          setPopupOpen={setPopupOpen}
+          isEdit={isEdit}
+          onSave={handleEventSave}
         />
+
+        <div className="flex items-center justify-between p-4 dark:text-white bg-white shadow dark:border-strokedark dark:bg-boxdark">
+          <button
+            onClick={() => setCurrentDay(subDays(currentDay, 1))}
+            className="px-4 py-2 text-white bg-primary rounded hover:bg-secondary transition duration-300 ease-in-out"
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </button>
+          <span className="text-primary dark:text-white font-semibold">
+            {currentDay.toLocaleDateString('fr-FR', {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </span>
+          <button
+            onClick={() => setCurrentDay(addDays(currentDay, 1))}
+            className="px-4 py-2 text-white bg-primary rounded hover:bg-secondary transition duration-300 ease-in-out"
+          >
+            <FontAwesomeIcon icon={faChevronRight} />
+          </button>
+        </div>
+
+        <div className="relative flex flex-col bg-white shadow dark:border-strokedark dark:bg-boxdark">
+          {isToday(currentDay) && (
+            <div
+              style={{
+                position: 'absolute',
+                top: `${getCurrentTimePosition()}px`,
+                left: 0,
+                right: 0,
+                height: '2px',
+                backgroundColor: 'red',
+                zIndex: 10,
+              }}
+            />
+          )}
+          {hours.map((hour, index) => (
+            <div key={index} className="flex items-center border-t border-gray-200" style={{ height: '80px' }}>
+              <span className="text-sm font-medium text-gray-900 px-4">{hour}</span>
+              <div className="flex-grow"></div>
+            </div>
+          ))}
+          <EventList
+            onDelete={handleDelete}
+            events={events}
+            draggingEvent={draggingEvent}
+            handleLongPress={handleLongPress}
+          />
+        </div>
+      </div>
+      <div className="w-1/3 mt-9 p-4">
+        <Notes />
       </div>
     </div>
   );
@@ -190,7 +225,7 @@ export default DayView;
 // Helper function for throttling
 function throttle(func, limit) {
   let inThrottle;
-  return function() {
+  return function () {
     const args = arguments;
     const context = this;
     if (!inThrottle) {

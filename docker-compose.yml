@@ -1,19 +1,4 @@
 services:
-  backend:
-    container_name: backend.dailyplanify
-    image: shinsenter/symfony:php8.3-alpine
-    ports:
-      - "8000:80"
-    environment:
-      DATABASE_HOST: database
-      DATABASE_NAME: ${DATABASE_NAME:-dailyplanify}
-      DATABASE_USER: ${DATABASE_USER:-dailyplanify}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-dailyplanifypassword}
-    networks:
-      - database
-    volumes:
-      - ./BackEnd:/var/www/html
-
   database:
     container_name: database.dailyplanify
     image: mysql:latest
@@ -34,22 +19,10 @@ services:
     container_name: phpmyadmin.dailyplanify
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8090:80"  # PHPMyAdmin will be accessible at http://localhost:8090
+      - "8090:80"
     environment:
       PMA_HOST: database
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD:-dailyplanifypassword}
-    networks:
-      - database
-
-  frontend:
-    container_name: frontend.dailyplanify
-    image: node:latest
-    working_dir: /app
-    volumes:
-      - ./FrontEnd:/app
-    ports:
-      - "3000:3000"
-    command: sh -c "npm install && npm run dev -- --host"
     networks:
       - database
 
@@ -57,6 +30,4 @@ networks:
   database: {}
 
 volumes:
-  ###> doctrine/doctrine-bundle ###
   database_data:
-###< doctrine/doctrine-bundle ###
