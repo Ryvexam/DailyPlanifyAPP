@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TextInput from './EventsPopup/TextInput.tsx';
 import DateTimeInput from './EventsPopup/DateTimeInput.tsx';
@@ -25,24 +25,27 @@ interface Event {
 const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit, onSave }) => {
   const getDefaultDate = () => {
     const currentDate = new Date();
-    return currentDate.toISOString().split('T')[0];
+
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+    const day = currentDate.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   };
 
   const getDefaultTime = () => {
     const currentDate = new Date();
-    const localTime = new Date(currentDate.getTime());
-    localTime.setMinutes(0);
-    const localISOTime = localTime.toISOString().slice(11, 16);
-    return localISOTime;
+    currentDate.setMinutes(0);
+    const hours = currentDate.getHours().toString().padStart(2, '0');
+    const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
   };
 
-  const getDefaultEndTime = ( startTime) => {
+  const getDefaultEndTime = (startTime) => {
     const [hours, minutes] = startTime.split(':').map(Number);
     const endHours = (hours + 1) % 24;
-    const endTime = `${endHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-    return endTime;
+    return `${endHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   };
-
 
   const colors = ['#17BEBB', '#E4572E', '#FFC914', '#2E282A', '#76B041', '#F283B6'];
 
@@ -66,7 +69,7 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
 
       try {
         const response = await axios.get(`${API_URL}/api/me`, config);
-        setUuid(response.data.uuid); // Fetch successful
+        setUuid(response.data.uuid);
       } catch (error) {
         console.error(error);
         return null; // Fetch failed
@@ -88,8 +91,8 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
       return;
     }
 
-    const startDateTime = new Date(`${dateStart}T${timeStart}`);
-    const endDateTime = new Date(`${dateEnd}T${timeEnd}`);
+    const startDateTime = `${dateStart}T${timeStart}`;
+    const endDateTime = `${dateEnd}T${timeEnd}`;
 
     const eventData = {
       Name: name,
@@ -102,13 +105,11 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
 
     try {
       let response;
-      response = await axios.patch(`${API_URL}/api/events/${uuid}`, eventData, {
-          headers: {
-            'Content-Type': 'application/merge-patch+json',
-          },
-        });
-
-
+      response = await axios.post(`${API_URL}/api/events`, eventData, {
+        headers: {
+          'Content-Type': 'application/ld+json',
+        },
+      });
 
       if (response.status === 200 || response.status === 201) {
         console.log('Event saved successfully');
