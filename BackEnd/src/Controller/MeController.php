@@ -17,14 +17,12 @@ class MeController extends AbstractController
 {
     private Security $security;
     private JWTEncoderInterface $jwtEncoder;
-    private SerializerInterface $serializer;
     private LoggerInterface $logger;
 
     public function __construct(Security $security, JWTEncoderInterface $jwtEncoder, SerializerInterface $serializer, LoggerInterface $logger)
     {
         $this->security = $security;
         $this->jwtEncoder = $jwtEncoder;
-        $this->serializer = $serializer;
         $this->logger = $logger;
     }
 

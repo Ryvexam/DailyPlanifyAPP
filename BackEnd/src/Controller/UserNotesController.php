@@ -5,7 +5,7 @@ namespace App\Controller;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\User;
-use App\Entity\Todo;
+use App\Entity\note;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Psr\Log\LoggerInterface;
 
-class UserTodosController extends AbstractController
+class UserNotesController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private ValidatorInterface $validator;
@@ -28,7 +28,7 @@ class UserTodosController extends AbstractController
         $this->logger = $logger;
     }
 
-    #[Route('/api/user/{uuid}/todos/', name: 'api_user_todos_by_uuid', methods: ['GET'])]
+    #[Route('/api/user/{uuid}/notes/', name: 'api_user_notes_by_uuid', methods: ['GET'])]
     public function index(string $uuid, Request $request): JsonResponse
     {
         try {
@@ -43,19 +43,18 @@ class UserTodosController extends AbstractController
                 return new JsonResponse(['error' => 'User not found'], JsonResponse::HTTP_NOT_FOUND);
             }
 
-            $todos = $this->entityManager->getRepository(Todo::class)->findBy(['userUuid' => $user->getUuid()]);
+            $notes = $this->entityManager->getRepository(note::class)->findBy(['userUuid' => $user->getUuid()]);
 
-            $todoData = [];
-            foreach ($todos as $todo) {
-                $todoData[] = [
-                    "todo_uuid" => $todo->getUuid(),
-                    "todo_name" => $todo->getName(),
-                    "todo_completed" => $todo->isCompleted(),
-                    "todo_priority" => $todo->isPriority(),
+            $noteData = [];
+            foreach ($notes as $note) {
+                $noteData[] = [
+                    "note_uuid" => $note->getUuid(),
+                    "note_date" => $note->getDate(),
+                    "note_content" => $note->getNoteContent(),
                 ];
             }
 
-            return new JsonResponse($todoData, JsonResponse::HTTP_OK);
+            return new JsonResponse($noteData, JsonResponse::HTTP_OK);
         } catch (BadRequestHttpException $e) {
             $this->logger->error('Bad request: ' . $e->getMessage());
             return new JsonResponse(['error' => $e->getMessage()], JsonResponse::HTTP_BAD_REQUEST);

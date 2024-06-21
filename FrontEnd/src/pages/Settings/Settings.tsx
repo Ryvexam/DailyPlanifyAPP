@@ -62,6 +62,7 @@ const Settings = () => {
                       </span>
                       <input
                         className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        readOnly={true}
                         type="email"
                         name="emailAddress"
                         id="emailAddress"
@@ -70,21 +71,6 @@ const Settings = () => {
                       />
                     </div>
                   </div>
-
-                  {/*<div className="flex justify-end gap-4.5">*/}
-                  {/*  <button*/}
-                  {/*    className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"*/}
-                  {/*    type="submit"*/}
-                  {/*  >*/}
-                  {/*    Cancel*/}
-                  {/*  </button>*/}
-                  {/*  <button*/}
-                  {/*    className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"*/}
-                  {/*    type="submit"*/}
-                  {/*  >*/}
-                  {/*    Save*/}
-                  {/*  </button>*/}
-                  {/*</div>*/}
                 </form>
               </div>
             </div>

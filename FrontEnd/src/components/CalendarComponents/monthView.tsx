@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { format, addMonths, getDaysInMonth, startOfMonth, getDay } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { fetchEvents, Event } from './Events/utils.ts'; // Import fetchEvents
+import { fetchEvents, Event } from '../utils.ts'; // Import fetchEvents
 import axios from 'axios';
 import ical from 'ical-generator';
 import API_URL from "../customenv.tsx"; // Import ical-generator
@@ -63,6 +63,7 @@ const MonthView = ({ onDaySelected, onDoubleClick }) => {
         end: new Date(event.event_date_end),
         summary: event.event_name,
         description: event.event_description,
+
       });
     });
 

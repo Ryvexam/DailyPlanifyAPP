@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef, ChangeEvent } from 'react';
 import { addDays, subDays } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import EventPopup from './Events/EventPopup.tsx';
 import AddEventButton from './Events/AddEventButton.tsx';
 import EventList from './Events/EventList.tsx';
-import { fetchEvents, Event } from './Events/utils.ts';
+import { fetchEvents, fetchNotes, Event, getUuidFromToken } from '../utils.ts';
 import axios from 'axios';
 import API_URL from '../customenv.tsx';
 import Notes from './Notes/Notes.tsx';
@@ -16,21 +16,86 @@ const DayView = ({ selectedDay }: { selectedDay: Date }) => {
   const [dragStartY, setDragStartY] = useState(0);
   const [currentDay, setCurrentDay] = useState<Date>(selectedDay);
   const [events, setEvents] = useState<Event[]>([]);
+  const [notes, setNotes] = useState<string>('');
+  const [existingNoteUuid, setExistingNoteUuid] = useState<string | null>(null);
   const [isEdit, setIsEdit] = useState(false);
   const throttledMove = useRef<(event: MouseEvent | TouchEvent) => void>();
 
+  const fetchAndSetEvents = async (day: Date) => {
+    try {
+      const fetchedEvents = await fetchEvents();
+      const filteredEvents = fetchedEvents.filter(
+        (event) => new Date(event.event_date_start).toDateString() === day.toDateString()
+      );
+      setEvents(filteredEvents);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
+
+  const fetchAndSetNotes = async (day: Date) => {
+    try {
+      const fetchedNotes = await fetchNotes();
+
+      const filteredNotes = fetchedNotes.filter(
+        (note) => new Date(note.note_date.date).toDateString() === day.toDateString()
+      );
+
+      if (filteredNotes.length > 0) {
+        setNotes(filteredNotes[0].note_content);
+        setExistingNoteUuid(filteredNotes[0].note_uuid);
+      } else {
+        setNotes('');
+        setExistingNoteUuid(null);
+      }
+    } catch (error) {
+      console.error('Error fetching notes:', error);
+    }
+  };
+
   useEffect(() => {
-    fetchEvents()
-      .then((fetchedEvents) => {
-        const filteredEvents = fetchedEvents.filter(
-          (event) => new Date(event.event_date_start).toDateString() === currentDay.toDateString()
-        );
-        setEvents(filteredEvents);
-      })
-      .catch((error) => {
-        console.error('Error fetching events:', error);
-      });
+    fetchAndSetEvents(currentDay);
+    fetchAndSetNotes(currentDay);
   }, [currentDay]);
+
+  const formatDate = (date: Date) => {
+    date.setHours(12, 0, 0, 0);
+    return date.toISOString().split('T')[0];
+  };
+
+  const handleSaveNotes = async () => {
+    try {
+      const formattedDate = formatDate(currentDay);
+      const noteData = {
+        NoteContent: notes,
+        Date: formattedDate,
+        userUuid: getUuidFromToken(),
+      };
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/ld+json',
+        },
+      };
+
+      if (existingNoteUuid) {
+        if (notes.trim() !== '') {
+          await axios.put(`${API_URL}/api/notes/${existingNoteUuid}`, noteData, config);
+          alert('Notes updated successfully!');
+        }
+      } else {
+        const response = await axios.post(`${API_URL}/api/notes`, noteData, config);
+        setExistingNoteUuid(response.data.note_uuid);
+        alert('Notes created successfully!');
+      }
+    } catch (error) {
+      console.error('Error saving notes:', error);
+    }
+  };
+
+  const handleNotesChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setNotes(e.target.value);
+  };
 
   const handleLongPress = (event: React.MouseEvent | React.TouchEvent, eventDetails: Event) => {
     event.preventDefault();
@@ -214,7 +279,7 @@ const DayView = ({ selectedDay }: { selectedDay: Date }) => {
         </div>
       </div>
       <div className="w-1/3 mt-9 p-4">
-        <Notes />
+        <Notes notes={notes} onNotesChange={handleNotesChange} handleSave={handleSaveNotes} />
       </div>
     </div>
   );

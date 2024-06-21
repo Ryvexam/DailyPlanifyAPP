@@ -8,6 +8,10 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Note>
+ * @method Note|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Note|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Note[]    findAll()
+ * @method Note[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class NotesRepository extends ServiceEntityRepository
 {
@@ -15,29 +19,4 @@ class NotesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Note::class);
     }
-
-//    /**
-//     * @return Notes[] Returns an array of Notes objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('n.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Notes
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

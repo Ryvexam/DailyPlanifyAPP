@@ -1,31 +1,24 @@
-import { useState } from 'react';
-import axios from 'axios';
-import API_URL from '../../customenv.tsx';
+import { ChangeEvent } from 'react';
 
-const Notes = () => {
-  const [notes, setNotes] = useState<string>('');
+interface NotesProps {
+  notes: string;
+  onNotesChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  handleSave: () => void;
+}
 
-  const handleSave = async () => {
-    try {
-      await axios.post(`${API_URL}/api/notes/`, { notes });
-      alert('Notes saved successfully!');
-    } catch (error) {
-      console.error('Error saving notes:', error);
-    }
-  };
-
+const Notes = ({ notes, onNotesChange, handleSave }: NotesProps) => {
   return (
     <div className="p-4 bg-white shadow dark:border-strokedark dark:bg-boxdark">
       <textarea
         value={notes}
-        onChange={(e) => setNotes(e.target.value)}
+        onChange={onNotesChange}
         rows={10}
         className="w-full p-2 border rounded dark:border-strokedark dark:bg-boxdark dark:text-white"
         placeholder="Write your notes here..."
       />
       <button
         onClick={handleSave}
-        className="mt-2 px-4 py-2 text-white bg-primary rounded hover:bg-secondary transition duration-300 ease-in-out "
+        className="mt-2 px-4 py-2 text-white bg-primary rounded hover:bg-secondary transition duration-300 ease-in-out"
       >
         Save
       </button>

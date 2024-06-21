@@ -1,7 +1,7 @@
 // src/components/ConnectionHandler.tsx
 import React, { useEffect, useState, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { handleCheckConnection } from './connectionUtils.js';
+import { handleCheckConnection } from '../utils.ts';
 import Loader from '../../common/Loader/Loader.tsx';
 
 interface ConnectionHandlerProps {

@@ -1,128 +1,159 @@
 
-# 🎉 DailyPlanify Projet Symfony 7 & React Vite TypeScript 🎉
+# 🌟 DailyPlanify
 
-Bienvenue dans le projet Symfony 7 pour le backend et React avec Vite et TypeScript pour le frontend. Ce document vous guidera pour lancer et configurer les deux parties du projet.
+## 📝 Description
 
-## 📋 Prérequis
+DailyPlanify est un projet réalisé durant mon année de Bachelor 3eme année au sein de l'école Hesias.
+C'est une application de gestion du quotidien avec un calendrier, des évenements, une liste de tâches et une section de notes.
 
-Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur votre machine :
+## 🚀 Prérequis
 
-- **PHP 8.2+**
-- **Composer**
-- **Node.js 20+**
-- **npm**
+Assurez-vous d'avoir les éléments suivants installés :
+- 🐳 Docker
+- 🧰 Composer
+- 🐘 PHP
+- 📦 Node.js et npm
+- 🌐 Symfony CLI
+- 🦀 Rust (nécessaire pour Tauri)
+- 🚀 Tauri CLI
 
-## 🚀 Installation et Lancement
+## ⚙️ Instructions de configuration
 
-### 🛠 Backend Symfony 7
+Suivez ces étapes pour configurer et exécuter le projet.
 
-1. **Cloner le dépôt**
+### 🖥️ Installation des dépendances
+
+#### Pour Linux
+
+1. **Installer Symfony CLI :**
    ```bash
-   git clone <url_du_depot_backend>
-   cd <nom_du_dossier_backend>
+   curl -sS https://get.symfony.com/cli/installer | bash
+   export PATH="$HOME/.symfony/bin:$PATH"
    ```
 
-2. **Installer les dépendances**
+2. **Installer Node.js et npm :**
+   Suivez les instructions sur le [site officiel de Node.js](https://nodejs.org/) pour installer la version appropriée pour votre système.
+
+3. **Installer Rust :**
    ```bash
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   source $HOME/.cargo/env
+   ```
+
+4. **Installer Tauri CLI :**
+   ```bash
+   npm install -g @tauri-apps/cli
+   ```
+
+#### Pour Windows
+
+1. **Installer Symfony CLI :**
+   Téléchargez et exécutez l'installateur depuis [Symfony CLI](https://get.symfony.com/cli/setup.exe).
+
+2. **Installer Node.js et npm :**
+   Téléchargez et installez depuis le [site officiel de Node.js](https://nodejs.org/).
+
+3. **Installer Rust :**
+   Téléchargez et exécutez l'installateur depuis [Rust](https://www.rust-lang.org/tools/install).
+
+4. **Installer Tauri CLI :**
+   ```bash
+   npm install -g @tauri-apps/cli
+   ```
+
+### 🖥️ Backend (Symfony)
+
+1. **Démarrer les conteneurs Docker :**
+   ```bash
+   docker-compose up -d
+   ```
+
+2. **Installer les dépendances Composer :**
+   ```bash
+   cd Backend/
    composer install
    ```
 
-3. **Configurer l'environnement**
-    - Copiez le fichier d'exemple des variables d'environnement :
-      ```bash
-      cp .env.example .env
-      ```
-    - Modifiez le fichier `.env` selon vos besoins (base de données, email, etc.)
-
-4. **Lancer le serveur de développement**
+3. **Mettre à jour le schéma de la base de données :**
    ```bash
-   symfony server:start
+   php bin/console doctrine:schema:update --force
    ```
 
-   Vous pouvez maintenant accéder à votre application Symfony sur `http://localhost:8000`.
-
-### ⚛️ Frontend React Vite TypeScript
-
-1. **Cloner le dépôt**
+4. **Démarrer le serveur Symfony :**
+   Ouvrez une nouvelle fenêtre/onglet de terminal et exécutez :
    ```bash
-   git clone <url_du_depot_frontend>
-   cd <nom_du_dossier_frontend>
+   symfony serve
    ```
 
-2. **Installer les dépendances**
+### 🌐 Frontend (React Vite TypeScript)
+
+1. **Naviguer vers le répertoire Frontend :**
+   ```bash
+   cd Frontend/
+   ```
+
+2. **Installer les packages npm :**
    ```bash
    npm install
-   # ou
-   yarn install
    ```
 
-3. **Configurer l'environnement**
-    - Copiez le fichier d'exemple des variables d'environnement :
-      ```bash
-      cp .env.example .env
-      ```
-    - Modifiez le fichier `.env` selon vos besoins (API endpoints, clés, etc.)
-
-4. **Lancer le serveur de développement**
+3. **Exécuter le serveur de développement :**
    ```bash
-   npm run dev
-   # ou
-   yarn dev
+   npm run dev -- --host
    ```
 
-   Vous pouvez maintenant accéder à votre application React sur `http://localhost:3000`.
+### 🖥️ Session Desktop Tauri
 
-5. **Construire pour la production**
-   ```bash
-   npm run build
-   # ou
-   yarn build
-   ```
+1. **Pour démarrer une session Tauri Desktop :**
+   - Pour créer un fichier exécutable (.exe) :
+     ```bash
+     npx tauri build
+     ```
+   - Pour démarrer en mode développement :
+     ```bash
+     npx tauri dev
+     ```
 
-## 📂 Structure des Dossiers
+### 📱 Android
 
-### Backend Symfony 7
+1. **Pour démarrer une session Android :**
+   - Pour créer un fichier APK :
+     ```bash
+     npx tauri android build
+     ```
+   - Pour démarrer en mode développement (recommandé pour les tests car la signature n'est pas nécessaire) :
+     ```bash
+     npx tauri android dev
+     ```
 
-```
-<nom_du_dossier_backend>/
-├── config/
-├── public/
-├── src/
-├── templates/
-├── tests/
-├── var/
-├── vendor/
-├── .env
-└── composer.json
-```
+## 💡 Notes supplémentaires
 
-### Frontend React Vite TypeScript
+- Remplacez `/Backend/` et `/Frontend/` par les chemins réels de vos répertoires backend et frontend.
+- Assurez-vous que Docker est en cours d'exécution et accessible avant de commencer la configuration du backend.
+- Symfony CLI (`symfony serve`) est supposé être disponible globalement.
 
-```
-<nom_du_dossier_frontend>/
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── pages/
-│   ├── styles/
-│   └── App.tsx
-├── .env
-├── index.html
-├── package.json
-└── vite.config.ts
-```
+## 🛠️ Dépannage
 
-## 🤝 Contribution
+- Assurez-vous que les ports utilisés par Docker et le serveur Symfony ne sont pas bloqués par des pare-feux ou d'autres services.
 
-Les contributions sont les bienvenues ! Veuillez ouvrir une issue ou une pull request pour discuter des modifications que vous souhaitez apporter.
+## 📜 Licence
 
-## 📄 Licence
+MIT License
 
-Ce projet est sous licence [Nom de la Licence]. Consultez le fichier `LICENSE` pour plus de détails.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
----
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-Si vous avez des questions ou des problèmes, n'hésitez pas à contacter l'équipe de développement.
-
-Merci d'avoir utilisé notre projet ! 🙏
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
