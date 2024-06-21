@@ -64,8 +64,10 @@ const SignIn: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Se connecter" />
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+        <Breadcrumb pageName="Se connecter" />
+
+        <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
             <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
@@ -127,8 +129,11 @@ const SignIn: React.FC = () => {
           </div>
         </div>
       </div>
+      </div>
+
     </DefaultLayout>
   );
+
 };
 
 export default SignIn;

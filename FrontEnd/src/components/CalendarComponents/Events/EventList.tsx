@@ -77,9 +77,14 @@ const EventList: React.FC<EventListProps> = ({
             draggable
             onMouseDown={(e) => handleLongPress(e, event)}
           >
-            <strong>{event.event_name}</strong>: {event.event_description}<br />
-
-            <small>Horaire: {startTime} - {endTime}</small>
+            <div className="max-sm:grid max-sm:grid-cols-2">
+              <div className="max-sm:col-span-1">
+                <strong className="inline-flex">{event.event_name}</strong><p className="max-sm:hidden inline-flex">: {event.event_description}</p>
+              </div>
+              <div className="max-sm:col-span-1 max-sm:justify-self-end">
+                <small>Horaire: {startTime} - {endTime}</small>
+              </div>
+            </div>
             <div
               className="lg:px-2 xl:px-2 md:py-1 md:px-2 md:text-base sm:py-1 sm:px-2 sm:text-sm inline-flex items-center justify-center gap-2.5 rounded-full border py-2 px-3 text-center font-medium"
               style={{ position: 'absolute', right: '5px', bottom: '5px' }}

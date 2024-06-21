@@ -15,11 +15,12 @@ module.exports = {
       ...defaultTheme.screens,
     },
     extend: {
+
       colors: {
         current: 'currentColor',
         transparent: 'transparent',
         white: '#FFFFFF',
-        black: '#033a26',
+        black: '#000000',
         red: '#FB5454',
         'black-2': '#010101',
         body: '#64748B',
@@ -221,7 +222,8 @@ module.exports = {
         '21/9': '21 / 9',
       },
       backgroundImage: {
-        video: "url('../images/video/video.png')",
+        'light-background': "url('/src/images/landing/white-bg.jpg')",
+        'dark-background': "url('/src/images/landing/dark-bg.jpg')",
       },
       content: {
         'icon-copy': 'url("../images/icon/icon-copy-alt.svg")',

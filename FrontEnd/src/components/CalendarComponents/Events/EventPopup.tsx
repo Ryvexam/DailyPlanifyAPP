@@ -112,7 +112,6 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
       });
 
       if (response.status === 200 || response.status === 201) {
-        console.log('Event saved successfully');
         onSave({
           event_uuid: response.data.event_uuid,
           event_name: eventData.Name,
@@ -124,7 +123,6 @@ const EventPopup: React.FC<EventPopupProps> = ({ popupOpen, setPopupOpen, isEdit
         setPopupOpen(false);
 
       } else {
-        console.error('Failed to save event');
       }
     } catch (error) {
       console.error('Error:', error);

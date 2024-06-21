@@ -101,87 +101,90 @@ const SignUp: React.FC = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Inscription" />
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-          <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-            S'inscrire sur DailyPlanify
-          </h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label className="mb-2.5 block font-medium text-black dark:text-white">
-                Email
-              </label>
-              <input
-                type="email"
-                placeholder="Entrez votre email"
-                className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+      <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
 
-            <div className="mb-6">
-              <label className="mb-2.5 block font-medium text-black dark:text-white">
-                Mot de passe
-              </label>
-              <input
-                type="password"
-                autoComplete={"new-password"}
-                placeholder="Entrez votre mot de passe"
-                className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <div className="mt-2 w-full h-2 rounded-lg" style={{ background: passwordStrength }} />
-            </div>
-
-            <div className="mb-6">
-              <label className="mb-2.5 block font-medium text-black dark:text-white">
-                Confirmation du mot de passe
-              </label>
-              <input
-                type="password"
-                placeholder="Confirmez votre mot de passe"
-                className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              {password && confirmPassword && password !== confirmPassword && (
-                <p className="text-red-600">Les mots de passe ne correspondent pas.</p>
-              )}
-            </div>
-
-            {/* Affichage de l'alerte après le bouton */}
-            {alert && (
-              <div className="mb-6">
-                <Alerts
-                  type={alert.type}
-                  title={alert.title}
-                  description={alert.description}
+        <Breadcrumb pageName="Inscription" />
+        <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
+            <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+              S'inscrire sur DailyPlanify
+            </h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label className="mb-2.5 block font-medium text-black dark:text-white">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  placeholder="Entrez votre email"
+                  className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-            )}
 
-            <div className="mb-5">
-              <input
-                type="submit"
-                value="Créer votre compte"
-                className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-              />
-            </div>
+              <div className="mb-6">
+                <label className="mb-2.5 block font-medium text-black dark:text-white">
+                  Mot de passe
+                </label>
+                <input
+                  type="password"
+                  autoComplete={"new-password"}
+                  placeholder="Entrez votre mot de passe"
+                  className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <div className="mt-2 w-full h-2 rounded-lg" style={{ background: passwordStrength }} />
+              </div>
 
-            <p className="text-center">
-              Vous avez déjà un compte ?{' '}
-              <Link to="/auth/signin" className="text-primary">
-                Se connecter
-              </Link>
-            </p>
-          </form>
+              <div className="mb-6">
+                <label className="mb-2.5 block font-medium text-black dark:text-white">
+                  Confirmation du mot de passe
+                </label>
+                <input
+                  type="password"
+                  placeholder="Confirmez votre mot de passe"
+                  className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {password && confirmPassword && password !== confirmPassword && (
+                  <p className="text-red-600">Les mots de passe ne correspondent pas.</p>
+                )}
+              </div>
+
+              {/* Affichage de l'alerte après le bouton */}
+              {alert && (
+                <div className="mb-6">
+                  <Alerts
+                    type={alert.type}
+                    title={alert.title}
+                    description={alert.description}
+                  />
+                </div>
+              )}
+
+              <div className="mb-5">
+                <input
+                  type="submit"
+                  value="Créer votre compte"
+                  className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                />
+              </div>
+
+              <p className="text-center">
+                Vous avez déjà un compte ?{' '}
+                <Link to="/auth/signin" className="text-primary">
+                  Se connecter
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
       </div>
     </DefaultLayout>
-  );
+);
 };
 
 export default SignUp;

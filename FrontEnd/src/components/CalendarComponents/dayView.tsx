@@ -81,12 +81,10 @@ const DayView = ({ selectedDay }: { selectedDay: Date }) => {
       if (existingNoteUuid) {
         if (notes.trim() !== '') {
           await axios.put(`${API_URL}/api/notes/${existingNoteUuid}`, noteData, config);
-          alert('Notes updated successfully!');
         }
       } else {
         const response = await axios.post(`${API_URL}/api/notes`, noteData, config);
         setExistingNoteUuid(response.data.note_uuid);
-        alert('Notes created successfully!');
       }
     } catch (error) {
       console.error('Error saving notes:', error);
@@ -216,8 +214,8 @@ const DayView = ({ selectedDay }: { selectedDay: Date }) => {
   };
 
   return (
-    <div className="flex">
-      <div className="w-2/3">
+    <div className="grid md:grid-cols-3">
+      <div className="max-sm:w-full max-sm:grid col-span-2">
         <AddEventButton onClick={openPopupWithDefaultEvent} />
 
         <EventPopup
@@ -250,7 +248,7 @@ const DayView = ({ selectedDay }: { selectedDay: Date }) => {
           </button>
         </div>
 
-        <div className="relative flex flex-col bg-white shadow dark:border-strokedark dark:bg-boxdark">
+        <div className="grid max-sm:order-2 md:order-1 relative flex-col bg-white shadow dark:border-strokedark dark:bg-boxdark">
           {isToday(currentDay) && (
             <div
               style={{
@@ -277,8 +275,12 @@ const DayView = ({ selectedDay }: { selectedDay: Date }) => {
             handleLongPress={handleLongPress}
           />
         </div>
+        <div className="max-sm:block md:hidden max-sm:order-1 order-2">
+          <Notes notes={notes} onNotesChange={handleNotesChange} handleSave={handleSaveNotes}
+          />
+        </div>
       </div>
-      <div className="w-1/3 mt-9 p-4">
+      <div className="max-sm:hidden col-span-1 mt-9 p-4">
         <Notes notes={notes} onNotesChange={handleNotesChange} handleSave={handleSaveNotes} />
       </div>
     </div>

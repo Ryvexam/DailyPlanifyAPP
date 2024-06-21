@@ -7,7 +7,7 @@ interface AddEventButtonProps {
 const AddEventButton: React.FC<AddEventButtonProps> = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="flex items-cente mb-3 gap-2 rounded bg-primary py-2 px-4.5 font-medium text-white hover:bg-opacity-90"
+    className="flex items-center mb-3 gap-2 rounded bg-primary py-2 px-4.5 font-medium text-white hover:bg-opacity-90"
   >
     <svg
       className="fill-current"

@@ -1,23 +1,17 @@
 import React from 'react';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
 import DefaultLayout from '../../layout/Header-NotConnected.tsx';
 
 const Landing: React.FC = () => {
+
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Accueil" />
-
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-8">
-        <h1 className="text-4xl font-bold text-center text-gray-800 dark:text-white mb-6">Bienvenue sur DailyPlanify</h1>
-        <p className="text-center text-lg text-gray-600 dark:text-gray-300 mb-8">
-          Organisez vos journées efficacement avec DailyPlanify. Téléchargez maintenant pour Windows et commencez à planifier votre succès !
-        </p>
-        <div className="flex justify-center">
-          <a href="/src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/dailyplanify_1.0.1_x64-setup.exe" download>
-            <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105">
-              Télécharger pour Windows
-            </button>
-          </a>
+      <div className="relative flex items-center justify-center h-screen bg-light-background dark:bg-dark-background bg-cover bg-center">
+        <div className="absolute inset-0 bg-white opacity-50 dark:bg-black dark:opacity-50"></div>
+        <div className="relative z-10 text-center p-8 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark opacity-90 dark:opacity-90 ">
+          <h1 className="text-4xl font-bold mb-6 text-black dark:text-white">DailyPlanify</h1>
+          <p className="text-lg text-gray-600 dark:text-white mb-8">
+            Organisez vos journées efficacement avec DailyPlanify. Commencez à planifier votre vie!
+          </p>
         </div>
       </div>
     </DefaultLayout>
